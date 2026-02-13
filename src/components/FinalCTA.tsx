@@ -13,7 +13,7 @@ const FinalCTA: React.FC = () => {
   };
 
   return (
-    <section className="relative py-20 bg-white overflow-hidden group/section">
+    <section className="relative py-8 bg-white overflow-hidden group/section">
       {/* Cinematic Background Atmosphere */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-50/40 rounded-full blur-[160px] animate-pulse duration-[10000ms]" />
@@ -23,7 +23,7 @@ const FinalCTA: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="max-w-full">
           {/* Left-Aligned Header with Subheading */}
-          <div className="space-y-3 mb-12 border-b border-slate-100 pb-6">
+          <div className="space-y-3 mb-6 border-b border-slate-100 pb-4">
             <div className="space-y-1">
               <span className="text-[10px] font-bold tracking-tight text-[#FF5024]">Career Decision Point</span>
               <h2 className="text-2xl md:text-4xl font-bold tracking-tighter text-slate-900 leading-none">

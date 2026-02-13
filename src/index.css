@@ -22,4 +22,7 @@
   html {
     scroll-behavior: smooth;
   }
+  button, [role="button"], select {
+    cursor: pointer;
+  }
 }

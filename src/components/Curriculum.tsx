@@ -1,6 +1,34 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const Curriculum: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let hasSentEvent = false;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasSentEvent) {
+          hasSentEvent = true;
+          // Small timeout to ensure LeadPopup listener is definitely ready
+          setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('trigger-lead-popup'));
+          }, 100);
+          observer.disconnect();
+        }
+      },
+      { 
+        threshold: 0.2, // Trigger when 20% of the section is visible
+        rootMargin: '0px 0px -50px 0px' // Offset to trigger slightly before/during entry
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   const phases = [
     {
       id: "01",
@@ -45,11 +73,11 @@ const Curriculum: React.FC = () => {
   ];
 
   return (
-    <section id="curriculum" className="relative py-16 bg-slate-50/20 overflow-hidden">
+    <section ref={sectionRef} id="curriculum" className="relative py-8 bg-slate-50/20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         
         {/* Inline Header Strategy */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 border-b border-slate-100 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-5 border-b border-slate-100 pb-4">
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-[#FF5024] tracking-tight ml-0.5">The roadmap</span>
             <h2 className="text-2xl md:text-4xl font-bold tracking-tighter text-slate-900 leading-none">

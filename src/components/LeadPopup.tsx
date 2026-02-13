@@ -1,13 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const LeadPopup: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const hasTriggeredReloadRef = useRef(false);
+  const hasTriggeredScrollRef = useRef(false);
 
   useEffect(() => {
-    // Show popup on every reload after a short delay
-    const timer = setTimeout(() => setIsOpen(true), 1200);
-    return () => clearTimeout(timer);
+    // 1. Initial trigger on reload (after 2 seconds)
+    const timer = setTimeout(() => {
+      if (!hasTriggeredReloadRef.current) {
+        setIsOpen(true);
+        hasTriggeredReloadRef.current = true;
+      }
+    }, 2000);
+
+    // 2. Listener for scroll-based triggers (from Curriculum section)
+    const handleTrigger = () => {
+      // Allow it to trigger on scroll even if the reload timer already fired,
+      // as long as it hasn't fired the scroll trigger yet.
+      if (!hasTriggeredScrollRef.current) {
+        setIsOpen(true);
+        hasTriggeredScrollRef.current = true;
+      }
+    };
+
+    window.addEventListener('trigger-lead-popup', handleTrigger);
+
+    // 3. Manual trigger (Always opens)
+    const handleManualTrigger = () => setIsOpen(true);
+    window.addEventListener('manual-trigger-lead-popup', handleManualTrigger);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('trigger-lead-popup', handleTrigger);
+      window.removeEventListener('manual-trigger-lead-popup', handleManualTrigger);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,10 +67,6 @@ const LeadPopup: React.FC = () => {
 
         {/* Header: Tightened Spacing */}
         <div className="mb-4 md:mb-10 text-center">
-          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-orange-50 border border-orange-100 rounded-full mb-1">
-            <span className="w-1 h-1 rounded-full bg-[#FF5024] animate-pulse" />
-            <span className="text-[7px] md:text-[9px] font-black text-[#FF5024] uppercase tracking-widest">Consultation</span>
-          </div>
           <h2 className="text-xl md:text-4xl font-bold tracking-tighter text-slate-900 leading-none">
             Talk to a <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF5024] to-[#F9A01B]">Cloud Consultant</span>
           </h2>

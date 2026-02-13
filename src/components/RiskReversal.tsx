@@ -36,11 +36,11 @@ const RiskReversal: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-16 bg-white overflow-hidden">
+    <section className="relative py-8 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         
         {/* Short & Professional Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-slate-50 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-5 border-b border-slate-50 pb-4">
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-[#FF5024] tracking-tight ml-0.5">Trust shield</span>
             <h2 className="text-2xl md:text-4xl font-bold tracking-tighter text-slate-900 leading-none">

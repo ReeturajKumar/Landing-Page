@@ -29,16 +29,19 @@ const PainPoints: React.FC = () => {
   ];
 
   return (
-    <section id="why-now" className="relative py-16 bg-white overflow-hidden">
+    <section id="why-now" className="relative py-8 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         
-        {/* Short & Inline Strategic Header */}
-        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-50">
-          <h2 className="text-2xl md:text-4xl font-bold tracking-tighter text-slate-900 leading-tight">
-            Is this <span className="relative inline-block pr-4 py-1 text-transparent bg-clip-text bg-gradient-to-r from-[#FF5024] to-[#F9A01B]">happening to you too?</span>
-          </h2>
-          <p className="text-sm font-medium text-slate-500 max-w-lg md:text-right leading-relaxed">
-            If you're nodding your head... you're not alone. But here's the truth: <br />
+        {/* Re-tuned Header for all breakpoints (Consistent Left Alignment) */}
+        <div className="mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-12 pb-8 border-b border-slate-100/50 text-left items-start lg:items-end">
+          <div className="space-y-3">
+            <h2 className="text-[24px] sm:text-4xl lg:text-[42px] xl:text-[48px] font-bold tracking-tight text-slate-900 leading-[1.15]">
+              Is this <br className="lg:hidden" />
+              <span className="relative inline-block py-1 text-transparent bg-clip-text bg-gradient-to-r from-[#FF5024] to-[#F9A01B]">happening to you too?</span>
+            </h2>
+          </div>
+          <p className="text-[13px] sm:text-base font-medium text-slate-500 max-w-2xl lg:text-right leading-relaxed">
+            If you're nodding your head... you're not alone. But here's the truth: <br className="hidden sm:block" />
             <span className="text-slate-900 font-bold">It's not your fault.</span> You were never taught the skills that actually get you hired.
           </p>
         </div>
@@ -48,8 +51,11 @@ const PainPoints: React.FC = () => {
           {points.map((point, i) => (
             <div 
               key={i} 
-              className="group relative p-8 rounded-[2rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-orange-100 hover:shadow-[0_20px_40px_-10px_rgba(255,80,36,0.06)] transition-all duration-500 flex flex-col justify-between"
+              className="group relative p-8 rounded-[2rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-[#FF502433] hover:shadow-[0_30px_60px_-15px_rgba(255,80,36,0.1)] transition-all duration-500 flex flex-col justify-between"
             >
+              {/* Theme Glow Effect: Unified & Subtle Ambient Orange */}
+              <div className="absolute -inset-2 -z-10 rounded-[2.5rem] bg-orange-100/50 blur-[50px] transition-all duration-700" />
+
               <div className="space-y-5">
                  <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold text-slate-400 tracking-tight leading-none">{point.label}</span>
@@ -70,15 +76,19 @@ const PainPoints: React.FC = () => {
               <div className="mt-8 pt-6 border-t border-slate-100">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-1.5">
-                    <div className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-slate-200" />
-                    <div className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-slate-300" />
+                    <div className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-slate-200 overflow-hidden">
+                       <img src={`https://i.pravatar.cc/50?u=${i}`} alt="user" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-slate-300 overflow-hidden">
+                       <img src={`https://i.pravatar.cc/50?u=${i+10}`} alt="user" className="w-full h-full object-cover" />
+                    </div>
                   </div>
                   <span className="text-[9px] font-bold text-slate-300 tracking-tight">Facing this right now</span>
                 </div>
               </div>
 
-              {/* Smooth Accent Indicator */}
-              <div className={`absolute bottom-0 left-12 right-12 h-1 ${point.accent} opacity-0 group-hover:opacity-20 blur-md transition-all duration-700`} />
+              {/* Smooth Bottom Accent Indicator */}
+              <div className={`absolute bottom-0 left-12 right-12 h-0.5 ${point.accent} opacity-0 group-hover:opacity-100 blur-sm transition-all duration-700`} />
             </div>
           ))}
         </div>

@@ -47,7 +47,7 @@ const UrgencySection: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-16 bg-white overflow-hidden">
+    <section className="relative py-8 bg-white overflow-hidden">
       {/* Abstract Background Detail */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-30">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-50 rounded-full blur-[100px]" />
@@ -97,11 +97,6 @@ const UrgencySection: React.FC = () => {
 
               {/* Right Column: Main Pressure & Timer */}
               <div className="flex-1 p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
-                {/* Floating "Live" Indicator */}
-                <div className="absolute top-8 right-8 flex items-center gap-2 px-3 py-1 bg-slate-900 rounded-full shadow-lg">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-[9px] font-bold text-white tracking-tight">14 Active enrollers</span>
-                </div>
 
                 <div className="max-w-xl space-y-8">
                   <div className="space-y-3">

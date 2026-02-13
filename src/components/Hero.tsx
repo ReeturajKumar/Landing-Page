@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import user1 from '../assets/avatars/user1.jpg';
 
 const Hero: React.FC = () => {
   const [isMainLoading, setIsMainLoading] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMainClick = () => {
     setIsMainLoading(true);
     setTimeout(() => setIsMainLoading(false), 1500);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsFormLoading(true);
-    setTimeout(() => setIsFormLoading(false), 1500);
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
@@ -28,14 +35,15 @@ const Hero: React.FC = () => {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
           {/* Left: Content Architecture */}
-          <div className="lg:col-span-7 space-y-6 md:space-y-8 text-center lg:text-left">
+          <div className="lg:col-span-12 xl:col-span-7 space-y-6 md:space-y-8 text-center xl:text-left">
 
             {/* Premium Header Architecture */}
             <div className="space-y-4 md:space-y-6">
               
-              <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.15] md:leading-[1.05] text-slate-900">
-                <span className="text-slate-400 font-medium text-base sm:text-2xl md:text-5xl lg:text-6xl block mb-1 md:mb-2 italic">From ₹4.5 LPA to</span> 
-                <span className="relative inline-block">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] md:leading-[1.05] text-slate-900">
+                <span className="text-slate-400 font-medium text-[20px] sm:text-2xl md:text-5xl lg:text-6xl italic">From ₹4.5 LPA to</span> 
+                <br className="block sm:hidden" />
+                <span className="relative inline-block mt-2 sm:mt-0">
                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF5024] via-[#F9A01B] to-[#FF5024] bg-[length:200%_auto] animate-gradient-x py-1">
                      ₹12 LPA in 6 months
                    </span>
@@ -45,7 +53,7 @@ const Hero: React.FC = () => {
                    </svg>
                 </span>
                 <br />
-                <span className="text-xl md:text-3xl lg:text-5xl font-bold tracking-tight text-slate-800/90 mt-2 md:mt-4 block leading-tight">
+                <span className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-slate-800/90 mt-3 md:mt-4 block leading-tight">
                   without quitting your job.
                 </span>
               </h1>
@@ -111,67 +119,97 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Premium Form Card */}
-          <div className="lg:col-span-5 relative mt-6 lg:mt-0 max-w-2xl mx-auto w-full">
-            <div className="relative z-10 w-full bg-white rounded-[2rem] p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-slate-100">
-              <div className="space-y-6">
-                <div className="text-center sm:text-left">
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
-                    Talk to a <span className="text-[#FF5024]">career mentor</span>
-                  </h3>
-                  <p className="text-[11px] text-gray-400 font-bold tracking-tight mt-1 capitalize">Get your personalized career roadmap for free</p>
-                </div>
+          {/* Right Column: Success Story Video & Career Jump */}
+          <div className="lg:col-span-12 xl:col-span-5 relative w-full group/video shrink-0">
+            
 
-                <form className="space-y-5" onSubmit={handleFormSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-slate-400 ml-1 uppercase tracking-tight">Full name</label>
-                      <input required type="text" placeholder="Enter your name" className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold focus:ring-1 focus:ring-[#FF5024] focus:bg-white outline-none transition-all placeholder:text-slate-300" />
+
+            {/* Video Container */}
+            <div 
+              onClick={togglePlay}
+              className="relative aspect-video rounded-[2rem] overflow-hidden bg-slate-900 shadow-[0_40px_80px_-15px_rgba(255,80,36,0.25)] border-4 border-white group-hover/video:shadow-[#FF502444] transition-all duration-700 cursor-pointer"
+            >
+              <video 
+                ref={videoRef}
+                className="w-full h-full object-cover relative z-10"
+                onEnded={() => setIsPlaying(false)}
+              >
+                <source src="/From_Stuck_to_Success_Career_Growth_Video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              {/* Overlays when paused */}
+              <div className={`absolute inset-0 z-20 bg-slate-900/40 backdrop-blur-[1px] transition-all duration-500 flex items-center justify-center ${isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                 <div className="w-20 h-20 bg-white/20 backdrop-blur-3xl rounded-full flex items-center justify-center border border-white/30 transform hover:scale-110 transition-transform">
+                    <svg className="w-8 h-8 text-white fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                 </div>
+              </div>
+
+              {/* Identity Overlay */}
+              <div className="absolute bottom-6 left-6 z-20">
+                  <div className="flex items-center gap-4">
+                    <div className="w-11 h-11 rounded-full border-2 border-white/50 overflow-hidden shadow-2xl">
+                       <img src={user1} alt="avatar" className="w-full h-full object-cover" />
                     </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold text-slate-400 ml-1 uppercase tracking-tight">Email address</label>
-                      <input required type="email" placeholder="name@company.com" className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold focus:ring-1 focus:ring-[#FF5024] focus:bg-white outline-none transition-all placeholder:text-slate-300" />
+                    <div className="flex flex-col">
+                      <h4 className="text-base font-bold text-white leading-none tracking-tight">Prashant K.</h4>
+                      <p className="text-[10px] font-bold text-orange-400 uppercase tracking-tighter mt-1.5">Senior DevOps Engineer</p>
                     </div>
                   </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] font-bold text-slate-400 ml-1 uppercase tracking-tight">Phone number</label>
-                    <div className="flex gap-2">
-                       <div className="shrink-0 px-3 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-black flex items-center gap-1.5 text-slate-400">
-                         <img src="https://flagcdn.com/w40/in.png" alt="India" width={16} height={11} className="w-4 h-auto rounded-sm opacity-80" />
-                         +91
-                       </div>
-                      <input required type="tel" placeholder="00000 00000" className="flex-1 px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold focus:ring-1 focus:ring-[#FF5024] focus:bg-white outline-none transition-all placeholder:text-slate-300" />
-                    </div>
-                  </div>
-
-                  <div className="pt-2">
-                    <button 
-                      disabled={isFormLoading}
-                      className="w-full py-5 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-slate-800 transition-all active:scale-[0.98] shadow-2xl shadow-slate-100 disabled:opacity-80 flex items-center justify-center gap-3"
-                    >
-                      {isFormLoading ? (
-                        <>
-                          <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Processing...
-                        </>
-                      ) : (
-                        "Get my roadmap now"
-                      )}
-                    </button>
-                    <p className="text-[9px] text-center text-slate-400 font-bold uppercase tracking-widest mt-4">
-                      Limited seats for feb 25th cohort
-                    </p>
-                  </div>
-                </form>
               </div>
             </div>
-          </div>
 
+            {/* Salary Transformation - Creative Progression Architecture */}
+            <div className="mt-8 relative px-2">
+              <div className="flex flex-row items-center justify-between gap-3 sm:gap-6 md:gap-12 p-4 sm:p-6 md:p-8 bg-gradient-to-br from-slate-50 to-white rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.05)] relative overflow-hidden group/stats">
+                {/* Background Accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-full blur-3xl -mr-16 -mt-16 opacity-50 group-hover/stats:scale-150 transition-transform duration-700" />
+                
+                {/* Left Side: The Past */}
+                <div className="relative flex flex-col gap-0.5 min-w-fit">
+                  <span className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.15em]">Previous</span>
+                  <div className="flex items-baseline gap-0.5 grayscale opacity-50 group-hover/stats:grayscale-0 group-hover/stats:opacity-100 transition-all duration-500">
+                    <span className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-500 line-through decoration-slate-300">₹4.5</span>
+                    <span className="text-[10px] md:text-[12px] font-bold text-slate-400">LPA</span>
+                  </div>
+                </div>
+
+                {/* The "Transformation Bridge" */}
+                <div className="flex-1 h-px bg-gradient-to-r from-slate-200 via-[#FF502444] to-[#FF5024] relative flex items-center justify-center min-w-[20px]">
+                  <div className="absolute w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white shadow-lg rounded-full border border-orange-50 flex items-center justify-center -translate-y-px group-hover/stats:scale-110 transition-transform">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-[#FF5024]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Right Side: The Future */}
+                <div className="relative flex flex-col items-end gap-0.5 min-w-fit">
+                  <span className="text-[8px] md:text-[10px] font-black text-[#FF5024] uppercase tracking-[0.15em]">Result</span>
+                  <div className="flex items-baseline gap-0.5">
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tighter drop-shadow-sm">₹12.0</span>
+                    <span className="text-[11px] md:text-[14px] font-black text-slate-900">LPA</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sub-label for context */}
+              <p className="mt-6 sm:mt-8 text-[9px] md:text-[11px] font-bold text-slate-400 text-center uppercase tracking-[0.2em] opacity-60">Verified transformational results after 24 weeks</p>
+            </div>
+
+            <style>{`
+              @keyframes bounce-subtle {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-3px); }
+              }
+              .animate-bounce-subtle {
+                animation: bounce-subtle 3s ease-in-out infinite;
+              }
+            `}</style>
+
+            {/* Decorative Card Glow */}
+            <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-orange-200/20 rounded-full blur-[120px] -z-10 animate-pulse" />
+          </div>
         </div>
 
         {/* Brand Ribbon: DRYo Infinite Auto-Scroll */}

@@ -12,6 +12,7 @@ const RiskReversal = lazy(() => import('./components/RiskReversal'))
 const UrgencySection = lazy(() => import('./components/UrgencySection'))
 const FinalCTA = lazy(() => import('./components/FinalCTA'))
 const Footer = lazy(() => import('./components/Footer'))
+const FloatingWidgets = lazy(() => import('./components/FloatingWidgets'))
 
 // Basic Section Loader to prevent layout jumps during lazy loading
 const SectionLoader = () => (
@@ -23,6 +24,7 @@ function App() {
    <>
     <LeadPopup />
     <Navbar />
+    <FloatingWidgets />
       <main>
         <Hero />
         <Suspense fallback={<SectionLoader />}>
