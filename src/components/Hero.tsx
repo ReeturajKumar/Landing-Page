@@ -172,6 +172,7 @@ const Hero: React.FC = () => {
                     <span className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-500 line-through decoration-slate-300">₹4.5</span>
                     <span className="text-[10px] md:text-[12px] font-bold text-slate-400">LPA</span>
                   </div>
+                  <span className="text-[9px] md:text-[11px] font-bold text-slate-400/80 uppercase tracking-tight -mt-1 grayscale opacity-50 group-hover/stats:grayscale-0 group-hover/stats:opacity-100 transition-all duration-500">Support Engineer</span>
                 </div>
 
                 {/* The "Transformation Bridge" */}
@@ -190,6 +191,7 @@ const Hero: React.FC = () => {
                     <span className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tighter drop-shadow-sm">₹12.0</span>
                     <span className="text-[11px] md:text-[14px] font-black text-slate-900">LPA</span>
                   </div>
+                  <span className="text-[9px] md:text-[11px] font-bold text-[#FF5024] uppercase tracking-tight -mt-1">DevOps Engineer</span>
                 </div>
               </div>
 
